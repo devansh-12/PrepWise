@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id            Int               @id @default(autoincrement())
+  name               String?
+  email              String            @unique
+  password_hash      String
+  phone              String?
+  created_at         DateTime?         @db.Timestamp(6)
+  ai_generation_logs AiGenerationLog[]
+  CandidateProfile   CandidateProfile?
+  roles              UserRole[]
+}
+
+model Role {
+  role_id   Int        @id @default(autoincrement())
+  role_name String     @unique
+  users     UserRole[]
+}
+
+model UserRole {
+  user_id Int
+  role_id Int
+  role    Role @relation(fields: [role_id], references: [role_id])
+  user    User @relation(fields: [user_id], references: [user_id])
+
+  @@id([user_id, role_id])
+}
+
+model Company {
+  company_id   Int          @id @default(autoincrement())
+  name         String?
+  website      String?
+  created_at   DateTime?    @db.Timestamp(6)
+  job_postings JobPosting[]
+}
+
+model JobPosting {
+  job_id       Int               @id @default(autoincrement())
+  company_id   Int
+  title        String?
+  description  String?
+  location     String?
+  posted_at    DateTime?         @db.Timestamp(6)
+  interviews   AiInterview[]
+  company      Company           @relation(fields: [company_id], references: [company_id])
+  requirements JobRequirement[]
+  matches      ResumeVsJdMatch[]
+}
+
+model Skill {
+  skill_id             Int                 @id @default(autoincrement())
+  skill_name           String              @unique
+  job_requirements     JobRequirement[]
+  parsed_resume_skills ParsedResumeSkill[]
+}
+
+model JobRequirement {
+  req_id         Int        @id @default(autoincrement())
+  job_id         Int
+  skill_id       Int
+  required_level String?
+  job            JobPosting @relation(fields: [job_id], references: [job_id])
+  skill          Skill      @relation(fields: [skill_id], references: [skill_id])
+}
+
+model CandidateProfile {
+  candidate_id Int           @id
+  education    String?
+  experience   String?
+  interviews   AiInterview[]
+  user         User          @relation(fields: [candidate_id], references: [user_id])
+  resumes      Resume[]
+}
+
+model Resume {
+  resume_id            Int                 @id @default(autoincrement())
+  candidate_id         Int
+  file_path            String?
+  parsed_text          String?
+  parsed_json          Json?
+  uploaded_at          DateTime?           @db.Timestamp(6)
+  parsed_resume_skills ParsedResumeSkill[]
+  candidate            CandidateProfile    @relation(fields: [candidate_id], references: [candidate_id])
+  matches              ResumeVsJdMatch[]
+}
+
+model ParsedResumeSkill {
+  resume_id Int
+  skill_id  Int
+  resume    Resume @relation(fields: [resume_id], references: [resume_id])
+  skill     Skill  @relation(fields: [skill_id], references: [skill_id])
+
+  @@id([resume_id, skill_id])
+}
+
+model ResumeVsJdMatch {
+  match_id       Int        @id @default(autoincrement())
+  resume_id      Int
+  job_id         Int
+  match_score    Float?
+  matched_skills Json?
+  missing_skills Json?
+  job            JobPosting @relation(fields: [job_id], references: [job_id])
+  resume         Resume     @relation(fields: [resume_id], references: [resume_id])
+}
+
+model AiInterview {
+  interview_id    Int                        @id @default(autoincrement())
+  job_id          Int
+  candidate_id    Int
+  scheduled_at    DateTime?                  @db.Timestamp(6)
+  status          String?
+  created_at      DateTime?                  @db.Timestamp(6)
+  candidate       CandidateProfile           @relation(fields: [candidate_id], references: [candidate_id])
+  job             JobPosting                 @relation(fields: [job_id], references: [job_id])
+  analysis        AiInterviewAnalysis?
+  cheating_events AiInterviewCheatingEvent[]
+  posture_data    AiInterviewPostureData[]
+  questions       AiInterviewQuestion[]
+  responses       AiInterviewResponse[]
+  voice_prompts   AiVoicePrompt[]
+}
+
+model AiInterviewQuestion {
+  question_id   Int                   @id @default(autoincrement())
+  interview_id  Int
+  question_text String?
+  question_type String?
+  ai_generated  Boolean?
+  asked_at      DateTime?             @db.Timestamp(6)
+  interview     AiInterview           @relation(fields: [interview_id], references: [interview_id])
+  responses     AiInterviewResponse[]
+}
+
+model AiInterviewResponse {
+  response_id         Int                 @id @default(autoincrement())
+  interview_id        Int
+  question_id         Int
+  response_text       String?
+  response_audio_path String?
+  response_video_path String?
+  transcript          String?
+  captured_at         DateTime?           @db.Timestamp(6)
+  interview           AiInterview         @relation(fields: [interview_id], references: [interview_id])
+  question            AiInterviewQuestion @relation(fields: [question_id], references: [question_id])
+}
+
+model AiInterviewCheatingEvent {
+  event_id         Int         @id @default(autoincrement())
+  interview_id     Int
+  event_type       String?
+  confidence_score Float?
+  detected_at      DateTime?   @db.Timestamp(6)
+  interview        AiInterview @relation(fields: [interview_id], references: [interview_id])
+}
+
+model AiInterviewPostureData {
+  posture_id   Int         @id @default(autoincrement())
+  interview_id Int
+  timestamp    DateTime?   @db.Timestamp(6)
+  posture_data Json?
+  interview    AiInterview @relation(fields: [interview_id], references: [interview_id])
+}
+
+model AiVoicePrompt {
+  prompt_id         Int         @id @default(autoincrement())
+  interview_id      Int
+  prompt_text       String?
+  prompt_audio_path String?
+  interview         AiInterview @relation(fields: [interview_id], references: [interview_id])
+}
+
+model AiInterviewAnalysis {
+  analysis_id             Int         @id @default(autoincrement())
+  interview_id            Int         @unique
+  technical_score         Float?
+  communication_score     Float?
+  confidence_score        Float?
+  overall_score           Float?
+  strengths               String?
+  weaknesses              String?
+  improvement_suggestions String?
+  analysis_json           Json?
+  interview               AiInterview @relation(fields: [interview_id], references: [interview_id])
+}
+
+model AiGenerationLog {
+  log_id           Int       @id @default(autoincrement())
+  user_id          Int
+  service_used     String?
+  request_payload  Json?
+  response_payload Json?
+  created_at       DateTime? @db.Timestamp(6)
+  user             User      @relation(fields: [user_id], references: [user_id])
+}
