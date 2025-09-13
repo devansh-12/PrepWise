@@ -38,6 +38,11 @@ function Header() {
                             Questions
                         </Link>
                     </li>
+                    <li>
+                        <Link href="/resume" className={`text-gray-300 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-white after:transition-all after:duration-300 cursor-pointer ${path == '/resume' && 'after:w-full'}`}>
+                            Resume
+                        </Link>
+                    </li>
                 </ul>
 
                 {/* Mobile Menu Button */}

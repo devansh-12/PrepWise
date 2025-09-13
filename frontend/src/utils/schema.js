@@ -1,5 +1,7 @@
 import { varchar, text } from "drizzle-orm/pg-core";
-import { pgTable, serial, foreignKey } from "drizzle-orm/pg-core";
+
+import { pgTable, serial, varchar, text, timestamp, integer } from "drizzle-orm/pg-core";
+
 
 export const MockInterview = pgTable('mockInterview', {
     id: serial('id').primaryKey(),
@@ -28,3 +30,29 @@ export const allowedUsers = pgTable('allowedUsers', {
     email: varchar('email').primaryKey(),
     status: varchar('status')
 });
+
+
+// -------------------- Users --------------------
+export const users = pgTable("users", {
+  user_id: serial("user_id").primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
+
+// -------------------- Candidate Profiles --------------------
+export const candidateProfiles = pgTable("candidate_profiles", {
+  id: serial("id").primaryKey(),
+  candidate_id: integer("candidate_id")
+    .notNull()
+    .references(() => users.user_id), // foreign key to users
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
+
+// -------------------- Resumes --------------------
+export const resumes = pgTable("resumes", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId").notNull(), // Clerk's user.id
+  filePath: text("filePath").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+})
