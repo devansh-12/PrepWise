@@ -12,7 +12,14 @@ export const ourFileRouter = {
       console.log("File uploaded:", file.ufsUrl);
       return { url: file.ufsUrl };
     }),
+  videoUploader: f({
+  video: { maxFileSize: "128MB" }, // add video support
+}).onUploadComplete(async ({ file }) => {
+  console.log("Video uploaded:", file.ufsUrl);
+  return { url: file.ufsUrl };
+}),
 } satisfies FileRouter;
+
 
 
 export type OurFileRouter = typeof ourFileRouter;

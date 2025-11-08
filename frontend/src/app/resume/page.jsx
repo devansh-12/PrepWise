@@ -130,11 +130,34 @@ const ResumePage = () => {
 
                 <UploadButton
                   endpoint="resumeUploader"
-                  onClientUploadComplete={(res) => {
-                    if (res && res.length > 0) {
-                      setUploadedFile({ name: res[0].name, url: res[0].url });
-                    }
-                  }}
+                  onClientUploadComplete={async (res) => {
+  if (res && res.length > 0) {
+    const file = res[0];
+    setUploadedFile({ name: file.name, url: file.url });
+
+    try {
+      // 🔥 Send file details to backend to save in DB
+      const response = await fetch("/api/saveResume", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userEmail: "user@example.com", // Replace with logged-in user email
+          resumeUrl: file.url,
+          uploadKey: file.key, // uploadthing key/ID
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to save");
+
+      console.log("✅ Resume saved to DB");
+    } catch (err) {
+      console.error("❌ Failed to save resume info:", err);
+      alert("Upload succeeded but failed to save resume info in database");
+      }
+    }
+    }}
+
                   onUploadError={(error) => {
                     alert(`Upload failed: ${error.message}`);
                   }}
