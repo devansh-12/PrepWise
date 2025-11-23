@@ -1,25 +1,24 @@
-// src/app/api/uploadthing/core.ts
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
 export const ourFileRouter = {
   resumeUploader: f({
-    pdf: { maxFileSize: "8MB" }, // PDFs are directly supported
-    blob: { maxFileSize: "8MB" }, // use blob for doc/docx
+    pdf: { maxFileSize: "8MB" },
+    blob: { maxFileSize: "8MB" },
   })
     .onUploadComplete(async ({ file }) => {
-      console.log("File uploaded:", file.ufsUrl);
-      return { url: file.ufsUrl };
+      console.log("Resume uploaded:", file.url);
+      // ❗ v5: do NOT return anything
     }),
+
   videoUploader: f({
-  video: { maxFileSize: "128MB" }, // add video support
-}).onUploadComplete(async ({ file }) => {
-  console.log("Video uploaded:", file.ufsUrl);
-  return { url: file.ufsUrl };
-}),
+    blob: { maxFileSize: "64MB" },
+  })
+    .onUploadComplete(async ({ file }) => {
+      console.log("Video uploaded:", file.url);
+      // ❗ v5: do NOT return anything
+    }),
 } satisfies FileRouter;
-
-
 
 export type OurFileRouter = typeof ourFileRouter;

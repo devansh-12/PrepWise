@@ -18,7 +18,7 @@ function Header() {
             <div className='flex p-2 items-center justify-between bg-gradient-to-r from-black via-purple-900 to-black shadow-lg border-b border-purple-500/20'>
                 <div className='flex items-center'>
                     <Image src={`/logo.png`} width={70} height={60} alt="Logo" className="hover:opacity-90 transition-opacity" />
-                    <h1 className="text-white text-2xl font-bold ml-2">HirePrepAI</h1>
+                    <h1 className="text-white text-2xl font-bold ml-2">PrepWiseAI</h1>
                 </div>
 
                 {/* Desktop Menu */}
