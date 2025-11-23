@@ -1,0 +1,41 @@
+{
+  "lesson_title": "OS: Deadlocks: Conditions & Prevention",
+  "total_slides": 7,
+  "scripts": [
+    {
+      "slide_number": 1,
+      "slide_title": "OS: Deadlocks: Conditions & Prevention",
+      "narration": "Hello and welcome to PrepWise. Today's topic is OS: Deadlocks: Conditions & Prevention. Let's get started."
+    },
+    {
+      "slide_number": 2,
+      "slide_title": "What is a Deadlock?",
+      "narration": "What is a Deadlock?. Let's demystify deadlocks in OS. Imagine two cars facing each other on a narrow road, both trying to move forward but blocking each other. This is similar to a deadlock in an Operating System. It's a situation where two or more processes are permanently blocked because each is waiting for a resource held by another process in the same set. Essentially, nothing can progress, halting the system."
+    },
+    {
+      "slide_number": 3,
+      "slide_title": "Deadlock Conditions: Part 1",
+      "narration": "Deadlock Conditions: Part 1. Now, let's explore the essential conditions. For a deadlock to occur, four conditions must simultaneously hold. First, we have Mutual Exclusion, meaning resources are non-shareable; only one process can use a resource at a time. Second, there's Hold and Wait: a process holds at least one resource and is waiting to acquire additional resources held by other processes."
+    },
+    {
+      "slide_number": 4,
+      "slide_title": "Deadlock Conditions: Part 2",
+      "narration": "Deadlock Conditions: Part 2. Moving on to the remaining critical conditions. The third condition is No Preemption, which means a resource cannot be forcibly taken from a process that is holding it; it must be released voluntarily. Finally, there's Circular Wait: a set of processes exists where each process is waiting for a resource held by the next process in the set, forming a closed chain. All four must be true for a deadlock."
+    },
+    {
+      "slide_number": 5,
+      "slide_title": "Preventing Deadlocks",
+      "narration": "Preventing Deadlocks. Great, now how can we prevent these dreaded deadlocks? Deadlock prevention aims to ensure that at least one of the four necessary conditions never holds. Since Mutual Exclusion is often fundamental to how certain resources work, we usually focus on breaking the other three conditions. By proactively designing the system, we can avoid deadlocks entirely. This is different from detection or recovery."
+    },
+    {
+      "slide_number": 6,
+      "slide_title": "Prevention Techniques & Question",
+      "narration": "Prevention Techniques & Question. Let's dive into practical prevention methods. For example, to prevent Hold and Wait, a process could request all its required resources at once, or release all current resources before requesting new ones. To break Circular Wait, we can impose a total ordering of all resource types, forcing processes to request resources in an increasing order. Think about this: if a system allows resources to be forcibly taken, which deadlock condition is it breaking?"
+    },
+    {
+      "slide_number": 7,
+      "slide_title": "Thanks for Watching!",
+      "narration": "That's all for this lesson. Thanks for watching and good luck with your placements!"
+    }
+  ]
+}
