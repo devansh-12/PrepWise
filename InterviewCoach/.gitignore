@@ -1,77 +1,80 @@
-# Python
+# -------------------------
+# Python Environment Things
+# -------------------------
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
+*.pyo
+*.pyd
+.env/
+.venv/
 venv/
 env/
-ENV/
-.venv
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+.eggs/
 
-# IDE
+# -------------------------
+# Environment Variables
+# -------------------------
+.env
+.env.*
+*.env.local
+*.env.production
+*.env.development
+
+# -------------------------
+# VSCode / IDE files
+# -------------------------
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
 
+# -------------------------
+# Operating System junk
+# -------------------------
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+Desktop.ini
+ehthumbs.db
+
+# -------------------------
+# Logs
+# -------------------------
+logs/
+*.log
+*.out
+
+# -------------------------
 # Generated Output Files
+# -------------------------
 performance_summary.png
 system_accuracy.png
 confidence_chart.png
 report.html
 report.pdf
 
-# Logs
-*.log
-
-# Environment Variables
-.env
-.env.local
-
-# Cache
-.cache/
-*.cache
-
+# -------------------------
 # Testing
+# -------------------------
 .pytest_cache/
 .coverage
 htmlcov/
 
+# -------------------------
 # Temporary Files
+# -------------------------
+tmp/
 *.tmp
 *.temp
 
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
+# -------------------------
 # Video/Audio recordings (if any)
+# -------------------------
 *.mp4
 *.avi
 *.mov
