@@ -57,8 +57,8 @@ Follow these steps carefully:
 
 ### Step 1: Download the Project
 ```cmd
-git clone https://github.com/nethra815/gemini-lesson-automation.git
-cd gemini-lesson-automation
+git clone https://https://github.com/devansh-12/PrepWise/.git
+cd /gemini-video-generator/gemini-lesson-automation
 ```
 ### Step 2: Create a Virtual Environment (Recommended)
 This keeps your project dependencies separate from other Python projects.
@@ -72,7 +72,7 @@ python -m venv venv
 **On Windows (CMD):**
 ```cmd
 venv\Scripts\activate
-
+```
 You'll see `(venv)` appear at the start of your command line.
 
 ### Step 4: Install Required Packages
@@ -164,7 +164,7 @@ gemini-lesson-automation/
 
 ### 3. Text-to-Speech (`generator.py` → `text_to_speech()`)
 - Converts each slide's text to natural speech
-- Uses Microsoft Edge TTS (Jenny Neural voice)
+- Uses Microsoft Edge TTS (Jenny Neural voice or Neerja Neural voice for Indian Dialect)
 - Saves as MP3 files
 
 ### 4. Visual Creation (`generator.py` → `generate_visuals()`)
