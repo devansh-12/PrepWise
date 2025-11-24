@@ -1,0 +1,438 @@
+{
+    "top_skills_identified": [
+        {
+            "preferredLabel": "manage ICT semantic integration",
+            "uri": "http://data.europa.eu/esco/skill/fda917eb-0d6a-4371-8c93-2a10bf950966",
+            "description": "Oversee integration of public or internal databases and other data, by using semantic technologies to produce structured semantic output.",
+            "categories": {
+                "level_0": "skills",
+                "level_1": "working with computers",
+                "level_2": "setting up and protecting computer systems",
+                "level_3": "setting up computer systems"
+            },
+            "detection_source": "embedding_fallback",
+            "similarity": 2.5417728424072266
+        },
+        {
+            "preferredLabel": "data mining",
+            "uri": "http://data.europa.eu/esco/skill/25f0ea33-b4a2-4f31-b7b4-7d20e827b180",
+            "description": "The methods of artificial intelligence, machine learning, statistics and databases used to extract content from a dataset.",
+            "categories": {
+                "level_0": "knowledge",
+                "level_1": "information and communication technologies (icts)",
+                "level_2": "information and communication technologies (icts)",
+                "level_3": "database and network design and administration"
+            },
+            "detection_source": "phrase_or_fuzzy",
+            "similarity": 2.1769670248031616
+        },
+        {
+            "preferredLabel": "data science",
+            "uri": "http://data.europa.eu/esco/skill/edebd83d-35f6-4ed5-a940-6c203d178c01",
+            "description": "The field of study that deals with big amount of data using AI techniques such as machine learning algorithms to predict patterns and obtain useful information to make business decisions",
+            "categories": {
+                "level_0": "knowledge",
+                "level_1": "information and communication technologies (icts)",
+                "level_2": "inter-disciplinary programmes and qualifications involving information and communication technologies (icts)",
+                "level_3": "inter-disciplinary programmes and qualifications involving information and communication technologies (icts)"
+            },
+            "detection_source": "phrase_or_fuzzy",
+            "similarity": 2.1769670248031616
+        },
+        {
+            "preferredLabel": "data engineering",
+            "uri": "http://data.europa.eu/esco/skill/48db96bf-3314-45c6-bad8-fdb6e20e5639",
+            "description": "The process of developing and constructing systems for implementing data collection and analysis at large scale.",
+            "categories": {
+                "level_0": "knowledge",
+                "level_1": "information and communication technologies (icts)",
+                "level_2": "information and communication technologies (icts)",
+                "level_3": "computer use"
+            },
+            "detection_source": "phrase_or_fuzzy",
+            "similarity": 2.1769670248031616
+        },
+        {
+            "preferredLabel": "inspect data",
+            "uri": "http://data.europa.eu/esco/skill/a571ae14-3e16-4fd3-a615-5646e0b0b696",
+            "description": "Analyse, transform and model data in order to discover useful information and to support decision-making.",
+            "categories": {
+                "level_0": "skills",
+                "level_1": "information skills",
+                "level_2": "analysing and evaluating information and data",
+                "level_3": "analysing and evaluating information and data"
+            },
+            "detection_source": "phrase_or_fuzzy",
+            "similarity": 2.1769670248031616
+        }
+    ],
+    "top_matching_occupations": [
+        {
+            "preferredLabel": "knowledge engineer",
+            "conceptUri": "http://data.europa.eu/esco/occupation/812c217d-32b7-4f6a-9faf-993d3577ac7f",
+            "iscoGroup": {
+                "code": "2529.9",
+                "name": "Database and network professionals not elsewhere classified",
+                "description": "Knowledge engineers integrate structured knowledge into computer systems (knowledge bases) in order to solve complex problems normally requiring a high level of human expertise or artificial intelligence methods. They are also responsible for eliciting or extracting knowledge from information sources, maintaining this knowledge, and making it available to the organisation or users. To achieve this, they are aware of knowledge representation and maintenance techniques (rules, frames, semantic nets, ontologies) and use knowledge extraction techniques and tools. They can design and build expert or artificial intelligence systems that use this knowledge."
+            },
+            "matching_skills_count": 4,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "manage ICT semantic integration",
+                "data engineering"
+            ],
+            "required_skills_count": 89
+        },
+        {
+            "preferredLabel": "data scientist",
+            "conceptUri": "http://data.europa.eu/esco/occupation/258e46f9-0075-4a2e-adae-1ff0477e0f30",
+            "iscoGroup": {
+                "code": "2511.4",
+                "name": "Systems analysts",
+                "description": "Data scientists find and interpret rich data sources, manage large amounts of data, merge data sources, ensure consistency of data-sets, and create visualisations to aid in understanding data. They build mathematical models using data, present and communicate data insights and findings to specialists and scientists in their team and if required, to a non-expert audience, and recommend ways to apply the data."
+            },
+            "matching_skills_count": 3,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "data engineering"
+            ],
+            "required_skills_count": 97
+        },
+        {
+            "preferredLabel": " artificial intelligence engineer ",
+            "conceptUri": "http://data.europa.eu/esco/occupation/35553663-deab-4d9a-bf22-15c1625d28e8",
+            "iscoGroup": {
+                "code": "2511.11",
+                "name": "Systems analysts",
+                "description": "Artificial intelligence engineer apply methods of artificial intelligence in engineering, robotics and computer science to design programs which simulate intelligence including thinking models, cognitive and knowledge-based systems, problem solving, and decision making. They also integrate structured knowledge into computer systems (ontologies, knowledge bases) in order to solve complex problems normally requiring a high level of human expertise or artificial intelligence methods."
+            },
+            "matching_skills_count": 3,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "manage ICT semantic integration"
+            ],
+            "required_skills_count": 89
+        },
+        {
+            "preferredLabel": "data analyst",
+            "conceptUri": "http://data.europa.eu/esco/occupation/d3edb8f8-3a06-47a0-8fb9-9b212c006aa2",
+            "iscoGroup": {
+                "code": "2511.3",
+                "name": "Systems analysts",
+                "description": "Data analysts import, inspect, clean, transform, validate, model, or interpret collections of data with regard to the business goals of the company. They ensure that the data sources and repositories provide consistent and reliable data. Data analysts use different algorithms and IT tools as demanded by the situation and the current data. They might prepare reports in the form of visualisations such as graphs, charts, and dashboards."
+            },
+            "matching_skills_count": 3,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "data engineering"
+            ],
+            "required_skills_count": 67
+        },
+        {
+            "preferredLabel": "chief data officer",
+            "conceptUri": "http://data.europa.eu/esco/occupation/e297ec12-4712-40a4-ad98-ba004cacb205",
+            "iscoGroup": {
+                "code": "1330.1",
+                "name": "Information and communications technology service managers",
+                "description": "Chief data officers manage companies' enterprise-wide data administration and data mining functions. They ensure data are used as a strategic business asset at the executive level and implement and support a more collaborative and aligned information management infrastructure for the benefit of the organisation at large."
+            },
+            "matching_skills_count": 3,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "data engineering"
+            ],
+            "required_skills_count": 61
+        },
+        {
+            "preferredLabel": "computer scientist",
+            "conceptUri": "http://data.europa.eu/esco/occupation/e3229e40-f571-4b26-baca-29edc8fe313e",
+            "iscoGroup": {
+                "code": "2511.1",
+                "name": "Systems analysts",
+                "description": "Computer scientists conduct research in computer and information science, directed toward greater knowledge and understanding of fundamental aspects of ICT phenomena. They write research reports and proposals. Computer scientists also invent and design new approaches to computing technology, find innovative uses for existing technology and studies and solve complex problems in computing."
+            },
+            "matching_skills_count": 3,
+            "matched_skills": [
+                "data science",
+                "data mining",
+                "data engineering"
+            ],
+            "required_skills_count": 90
+        },
+        {
+            "preferredLabel": "computer vision engineer",
+            "conceptUri": "http://data.europa.eu/esco/occupation/1c5a45b9-440e-4726-b565-16a952abd341",
+            "iscoGroup": {
+                "code": "2511.2",
+                "name": "Systems analysts",
+                "description": "Computer vision engineers research, design, develop, and train artificial intelligence algorithms and machine learning primitives that understand the content of digital images based on a large amount of data. They apply this understanding to solve different real-world problems such as security, autonomous driving, robotic manufacturing, digital image classification, medical image processing and diagnosis, etc."
+            },
+            "matching_skills_count": 2,
+            "matched_skills": [
+                "data science",
+                "data engineering"
+            ],
+            "required_skills_count": 52
+        },
+        {
+            "preferredLabel": "database integrator",
+            "conceptUri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+            "iscoGroup": {
+                "code": "2521.4",
+                "name": "Database designers and administrators",
+                "description": "Database integrators perform integration among different databases. They maintain integration and ensure interoperability."
+            },
+            "matching_skills_count": 2,
+            "matched_skills": [
+                "manage ICT semantic integration",
+                "data engineering"
+            ],
+            "required_skills_count": 67
+        },
+        {
+            "preferredLabel": "database designer",
+            "conceptUri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+            "iscoGroup": {
+                "code": "2521.2",
+                "name": "Database designers and administrators",
+                "description": "Database designers specify the database's logical structure, processes, and information flows. They design data models and databases to serve data acquisition."
+            },
+            "matching_skills_count": 2,
+            "matched_skills": [
+                "data science",
+                "data engineering"
+            ],
+            "required_skills_count": 103
+        },
+        {
+            "preferredLabel": "hospitality revenue manager",
+            "conceptUri": "http://data.europa.eu/esco/occupation/002da35b-7808-43f3-83bf-63596b8b351f",
+            "iscoGroup": {
+                "code": "2431.9",
+                "name": "Advertising and marketing professionals",
+                "description": "Hospitality revenue managers maximise revenue generated from facilities such as hotels, holiday resorts and camping grounds by analysing trends and competition. They assist establishment managers in strategic decisions. Hospitality revenue managers analyse and optimise the financial potential of facilities and manage the corresponding staff."
+            },
+            "matching_skills_count": 1,
+            "matched_skills": [
+                "inspect data"
+            ],
+            "required_skills_count": 29
+        }
+    ],
+    "skill_gap_analysis": {
+        "strengths": [
+            {
+                "preferredLabel": "data engineering",
+                "uri": "http://data.europa.eu/esco/skill/48db96bf-3314-45c6-bad8-fdb6e20e5639",
+                "description": "The process of developing and constructing systems for implementing data collection and analysis at large scale.",
+                "similarity": 1.0
+            },
+            {
+                "preferredLabel": "data mining",
+                "uri": "http://data.europa.eu/esco/skill/25f0ea33-b4a2-4f31-b7b4-7d20e827b180",
+                "description": "The methods of artificial intelligence, machine learning, statistics and databases used to extract content from a dataset.",
+                "similarity": 1.0
+            },
+            {
+                "preferredLabel": "manage ICT semantic integration",
+                "uri": "http://data.europa.eu/esco/skill/fda917eb-0d6a-4371-8c93-2a10bf950966",
+                "description": "Oversee integration of public or internal databases and other data, by using semantic technologies to produce structured semantic output.",
+                "similarity": 1.0
+            },
+            {
+                "preferredLabel": "data science",
+                "uri": "http://data.europa.eu/esco/skill/edebd83d-35f6-4ed5-a940-6c203d178c01",
+                "description": "The field of study that deals with big amount of data using AI techniques such as machine learning algorithms to predict patterns and obtain useful information to make business decisions",
+                "similarity": 0.9999997615814209
+            }
+        ],
+        "gaps": [
+            {
+                "preferredLabel": "unstructured data",
+                "uri": "http://data.europa.eu/esco/skill/c5e8abde-d2ba-4e8e-a65e-720b71180666",
+                "description": "The information that is not arranged in a pre-defined manner or does not have a pre-defined data model and is difficult to understand and find patterns in without using techniques such as data mining.",
+                "similarity": 0.9156135320663452
+            },
+            {
+                "preferredLabel": "use databases",
+                "uri": "http://data.europa.eu/esco/skill/4463a721-69f3-413d-8321-43e3af13a4f1",
+                "description": "Use software tools for managing and organising data in a structured environment which consists of attributes, tables and relationships in order to query and modify the stored data.",
+                "similarity": 0.855033278465271
+            },
+            {
+                "preferredLabel": "database development tools",
+                "uri": "http://data.europa.eu/esco/skill/9ef0f3a0-9ce2-4ef1-a987-0366b5cb2dbe",
+                "description": "The methodologies and tools used for creating logical and physical structure of databases, such as logical data structures, diagrams, modelling methodologies and entity-relationships.",
+                "similarity": 0.8506981730461121
+            },
+            {
+                "preferredLabel": "manage cloud data and storage",
+                "uri": "http://data.europa.eu/esco/skill/d3286405-49f8-4e8a-8046-a4376b4e7963",
+                "description": "Create and manage cloud data retention. Identify and implement data protection, encryption, and capacity planning needs.",
+                "similarity": 0.8506137728691101
+            },
+            {
+                "preferredLabel": "manage database",
+                "uri": "http://data.europa.eu/esco/skill/29fb0fb5-dfc4-4098-ac9b-3a712000f48f",
+                "description": "Apply database design schemes and models, define data dependencies, use query languages and database management systems (DBMS) to develop and manage databases.",
+                "similarity": 0.8403456807136536
+            },
+            {
+                "preferredLabel": "define database physical structure",
+                "uri": "http://data.europa.eu/esco/skill/022dc430-872a-473a-9cf4-fed4895e58ad",
+                "description": "Specify the physical configuration of database files on a given media. This consists of in-detail specifications of indexing options, data types and data elements placed in the data dictionary.",
+                "similarity": 0.8326762914657593
+            },
+            {
+                "preferredLabel": "business intelligence",
+                "uri": "http://data.europa.eu/esco/skill/143769cb-b61e-47d8-a61e-eedfbec1016c",
+                "description": "The tools used to transform large amounts of raw data into relevant and helpful business information.",
+                "similarity": 0.8277385234832764
+            },
+            {
+                "preferredLabel": "SAS language",
+                "uri": "http://data.europa.eu/esco/skill/04f1b938-d4d4-4cb1-a863-982af76b9d93",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in SAS language.",
+                "similarity": 0.8269611597061157
+            },
+            {
+                "preferredLabel": "SPARQL",
+                "uri": "http://data.europa.eu/esco/skill/5da8018b-ae85-4cde-ad93-0394369018f3",
+                "description": "The computer language SPARQL is a query language for retrieval of information from a database and of documents containing the needed information. It is developed by the international standards organisation World Wide Web Consortium.",
+                "similarity": 0.8146000504493713
+            },
+            {
+                "preferredLabel": "resource description framework query language",
+                "uri": "http://data.europa.eu/esco/skill/99207709-d076-4cce-ba38-e90d3bb28806",
+                "description": "The query languages such as SPARQL which are used to retrieve and manipulate data stored in Resource Description Framework format (RDF).",
+                "similarity": 0.8133917450904846
+            },
+            {
+                "preferredLabel": "create database diagrams",
+                "uri": "http://data.europa.eu/esco/skill/84f58e3d-8669-4d83-8c1d-5dd1e73a654f",
+                "description": "Develop the database design models and diagrams which establish the structure of a database by using modelling software tools to be implemented in further processes.",
+                "similarity": 0.8086824417114258
+            },
+            {
+                "preferredLabel": "business process modelling",
+                "uri": "http://data.europa.eu/esco/skill/98301d4a-2cc3-439d-8d7f-0b6ac76302bb",
+                "description": "The tools, methods and notations such as Business Process Model and Notation (BPMN) and Business Process Execution Language (BPEL), used to describe and analyse the characteristics of a business process and model its further development.",
+                "similarity": 0.7865163087844849
+            },
+            {
+                "preferredLabel": "store digital data and systems",
+                "uri": "http://data.europa.eu/esco/skill/611ed16b-99bf-4840-9cab-f55d1d286e0a",
+                "description": "Use software tools to archive data by copying and backing them up, in order to ensure their integrity and to prevent data loss.",
+                "similarity": 0.7838886976242065
+            },
+            {
+                "preferredLabel": "N1QL",
+                "uri": "http://data.europa.eu/esco/skill/f597f772-24d3-4cec-813c-cf5a7027c794",
+                "description": "The computer language N1QL is a query language for retrieval of information from a database and of documents containing the needed information. It is developed by the software company Couchbase.",
+                "similarity": 0.7767937183380127
+            },
+            {
+                "preferredLabel": "ML (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/a4d336a6-9ffd-402a-91cc-f359716ba4e0",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in ML.",
+                "similarity": 0.7750490307807922
+            },
+            {
+                "preferredLabel": "create semantic trees",
+                "uri": "http://data.europa.eu/esco/skill/cb89a5c0-b5cb-4c62-8e7e-7714631b66b5",
+                "description": "Create coherent lists and hierarchies of concepts and terms to ensure consistent indexing in knowledge organisation systems.",
+                "similarity": 0.7734688520431519
+            },
+            {
+                "preferredLabel": "LINQ",
+                "uri": "http://data.europa.eu/esco/skill/c7d24594-0c11-4b27-9039-fe0bb903da8e",
+                "description": "The computer language LINQ is a query language for retrieval of information from a database and of documents containing the needed information. It is developed by the software company Microsoft.",
+                "similarity": 0.7714248299598694
+            },
+            {
+                "preferredLabel": "Smalltalk (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/42ed3bfb-1a01-4c8b-9758-fc6438865734",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Smalltalk.",
+                "similarity": 0.7705055475234985
+            },
+            {
+                "preferredLabel": "task algorithmisation",
+                "uri": "http://data.europa.eu/esco/skill/7482a123-e801-48de-9733-262125671410",
+                "description": "The techniques to convert unstructured descriptions of a process into step-by-step sequence of actions of a finite number of steps.",
+                "similarity": 0.7692128419876099
+            },
+            {
+                "preferredLabel": "information categorisation",
+                "uri": "http://data.europa.eu/esco/skill/93aaf65c-5aad-4e6f-a7ba-ce9bf7c0e6e6",
+                "description": "The process of classifying the information into categories and showing relationships between the data for some clearly defined purposes.",
+                "similarity": 0.7682961225509644
+            },
+            {
+                "preferredLabel": "Prolog (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/2bde42ae-e776-41c1-9ded-b07b30bfe985",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Prolog.",
+                "similarity": 0.7673754692077637
+            },
+            {
+                "preferredLabel": "Ruby (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/0ccdfe98-f845-4598-84a1-3dca66e9d9a3",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Ruby.",
+                "similarity": 0.7645586729049683
+            },
+            {
+                "preferredLabel": "Scratch (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/d56fc2b5-4b0a-4e7e-9bde-a33736f6ff18",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Scratch.",
+                "similarity": 0.7564511299133301
+            },
+            {
+                "preferredLabel": "Assembly (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/47b9bbcf-356c-4782-83a4-7f5a1b2b51a3",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Assembly.",
+                "similarity": 0.7539529204368591
+            },
+            {
+                "preferredLabel": "Pascal (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/e8b89eb6-51e8-4c3a-babb-88b2e110376b",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Pascal.",
+                "similarity": 0.7535169720649719
+            },
+            {
+                "preferredLabel": "ICT project management",
+                "uri": "http://data.europa.eu/esco/skill/94dd823c-148e-4614-a6e8-99249b16357d",
+                "description": "The methodologies for the planning, implementation, review and follow-up of ICT projects, such as the development, integration, modification and sales of ICT products and services, as well as projects relating technological innovation in the field of ICT.",
+                "similarity": 0.7534224987030029
+            },
+            {
+                "preferredLabel": "AJAX",
+                "uri": "http://data.europa.eu/esco/skill/b4dc6e4f-dc7d-445f-8ce2-d7b9d225e282",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in AJAX.",
+                "similarity": 0.7519965171813965
+            },
+            {
+                "preferredLabel": "computer programming",
+                "uri": "http://data.europa.eu/esco/skill/21d2f96d-35f7-4e3f-9745-c533d2dd6e97",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms (e.g. object oriented programming, functional programming) and of programming languages.",
+                "similarity": 0.7513361573219299
+            },
+            {
+                "preferredLabel": "Java (computer programming)",
+                "uri": "http://data.europa.eu/esco/skill/19a8293b-8e95-4de3-983f-77484079c389",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in Java.",
+                "similarity": 0.7512034773826599
+            },
+            {
+                "preferredLabel": "VBScript",
+                "uri": "http://data.europa.eu/esco/skill/dcdd5ddf-82a6-4ac3-8edc-d4b23cae9a88",
+                "description": "The techniques and principles of software development, such as analysis, algorithms, coding, testing and compiling of programming paradigms in VBScript.",
+                "similarity": 0.7510574460029602
+            }
+        ],
+        "underdeveloped": []
+    }
+}
