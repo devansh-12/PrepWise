@@ -140,7 +140,7 @@ export default function Home() {
 
         {/* Features Section */}
         <section id="features" className="py-12 md:py-20">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose AI PrepGem?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose AI PrepWise?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {

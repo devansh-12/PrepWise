@@ -8,13 +8,16 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "npx drizzle-kit push",
-    "db:studio": "npx drizzle-kit studio"
+    "db:studio": "npx drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.19",
     "@clerk/clerk-react": "^5.43.0",
     "@clerk/nextjs": "^6.31.3",
     "@codemirror/lang-javascript": "^6.2.4",
+    "@deepgram/sdk": "^4.11.2",
     "@google/generative-ai": "^0.16.0",
     "@neondatabase/serverless": "^0.9.4",
     "@prisma/client": "^6.14.0",
@@ -24,7 +27,8 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@uiw/codemirror-theme-vscode": "^4.23.13",
     "@uiw/react-codemirror": "^4.23.13",
-    "@uploadthing/react": "^7.3.3",
+    "@uploadthing/react": "^5.7.0",
+    "@uploadthing/shared": "^7.1.10",
     "@vapi-ai/web": "^2.3.6",
     "ai": "^4.3.16",
     "chart.js": "^4.4.9",
@@ -54,7 +58,7 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^7.7.4",
+    "uploadthing": "^5.7.4",
     "uuid": "^10.0.0",
     "zod": "^3.25.67"
   },

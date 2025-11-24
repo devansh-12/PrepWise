@@ -1,27 +1,33 @@
-// src/app/api/interview/route.ts
-import { NextResponse } from "next/server";
-import { db } from "@/utils/db";
-import { v4 as uuidv4 } from "uuid";
+import { NextResponse } from "next/server"
+import { db } from "@/utils/db"
+import { MockInterview } from "@/utils/schema"
+import { v4 as uuidv4 } from "uuid"
+import moment from "moment"
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = await req.json()
 
-    const newInterview = await db.aiInterview.create({
-      data: {
-        interview_id: uuidv4(),
-        candidate_id: body.candidate_id ?? 1, // temp fallback
-        job_position: body.job_position,
-        job_description: body.job_description,
-        experience_level: parseInt(body.experience_level, 10),
-        feedback: body.feedback,
-        created_at: new Date(),
-      },
-    });
+    // ✅ Insert interview using Drizzle ORM
+    const inserted = await db
+      .insert(MockInterview)
+      .values({
+        mockId: body.mockId ?? uuidv4(),
+        jsonMockResp: JSON.stringify(body.jsonMockResp),
+        jobPosition: body.jobPosition,
+        jobDesc: body.jobDesc,
+        jobExperience: String(body.jobExperience), // Convert to string to match schema
+        createdBy: body.createdBy,
+        createdAt: body.createdAt ?? moment().format("DD-MM-YYYY"),
+      })
+      .returning({ mockId: MockInterview.mockId })
 
-    return NextResponse.json(newInterview);
+    return NextResponse.json({ success: true, mockId: inserted[0].mockId })
   } catch (err: any) {
-    console.error("Interview create error:", err);
-    return NextResponse.json({ error: "Failed to create interview" }, { status: 500 });
+    console.error("❌ Error creating interview:", err)
+    return NextResponse.json(
+      { success: false, error: "Failed to create interview" },
+      { status: 500 }
+    )
   }
 }

@@ -9,17 +9,18 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
 function Interview({ params }) {
+    const unwrappedParams = React.use(params);
     const [data, setData] = useState();
     const [webcamEnabled, setWebcamEnabled] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        console.log("id from params", params.interviewId);
+        console.log("id from params", unwrappedParams.interviewId);
         getInterviewDetails()
     }, [])
 
     const getInterviewDetails = async () => {
-        const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId))
+        const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, unwrappedParams.interviewId))
         console.log("details!!", result[0]);
         setData(result[0])
     }
@@ -38,7 +39,7 @@ function Interview({ params }) {
                     </div>
                     <div className='p-6 rounded-xl bg-gray-900/30 border border-gray-700 shadow-lg backdrop-blur-sm'>
                         <h2 className='flex gap-2 items-center font-semibold text-gray-300 mb-3'>
-                            <LightbulbIcon className="h-5 w-5"/>
+                            <LightbulbIcon className="h-5 w-5" />
                             Information
                         </h2>
                         <h2 className='text-gray-300'>{process.env.NEXT_PUBLIC_INFO}</h2>
@@ -47,9 +48,9 @@ function Interview({ params }) {
                 <div>
                     {webcamEnabled ? (
                         <div className='rounded-xl overflow-hidden border border-gray-700 shadow-lg'>
-                            <Webcam 
-                                onUserMedia={() => setWebcamEnabled(true)} 
-                                onUserMediaError={() => setWebcamEnabled(false)} 
+                            <Webcam
+                                onUserMedia={() => setWebcamEnabled(true)}
+                                onUserMediaError={() => setWebcamEnabled(false)}
                                 mirrored={true}
                                 className='w-full'
                             />
@@ -59,8 +60,8 @@ function Interview({ params }) {
                             <div className='bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 shadow-lg p-8'>
                                 <WebcamIcon className='h-72 w-full p-20 text-gray-400' />
                             </div>
-                            <Button 
-                                variant="outline" 
+                            <Button
+                                variant="outline"
                                 className='mt-4 bg-gray-900/50 text-gray-200 border-gray-700 hover:bg-gray-800/70 transition-all duration-300'
                                 onClick={() => setWebcamEnabled(true)}
                             >
@@ -72,8 +73,8 @@ function Interview({ params }) {
             </div>
 
             <div className='flex justify-end mt-8'>
-                <Button 
-                    onClick={() => router.push(`/dashboard/interview/${params.interviewId}/start`)}
+                <Button
+                    onClick={() => router.push(`/dashboard/interview/${unwrappedParams.interviewId}/start`)}
                     className='bg-gradient-to-r from-purple-400 to-purple-300 hover:from-purple-300 hover:to-purple-300 text-gray-800 shadow-lg transition-all duration-300'
                 >
                     Start Interview

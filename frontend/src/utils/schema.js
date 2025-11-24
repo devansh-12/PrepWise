@@ -1,7 +1,5 @@
 import { varchar, text } from "drizzle-orm/pg-core";
-
-import { pgTable, serial, varchar, text, timestamp, integer } from "drizzle-orm/pg-core";
-
+import { pgTable, serial, foreignKey } from "drizzle-orm/pg-core";
 
 export const MockInterview = pgTable('mockInterview', {
     id: serial('id').primaryKey(),
@@ -31,28 +29,21 @@ export const allowedUsers = pgTable('allowedUsers', {
     status: varchar('status')
 });
 
+//--------------------------------
 
-// -------------------- Users --------------------
-export const users = pgTable("users", {
-  user_id: serial("user_id").primaryKey(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  name: varchar("name", { length: 255 }),
-  created_at: timestamp("created_at").defaultNow().notNull(),
+export const InterviewVideo = pgTable('interviewVideo', {
+    id: serial('id').primaryKey(),
+    mockIdRef: varchar('mockId').notNull(),    // links to MockInterview.mockId
+    questionNo: varchar('questionNo').notNull(), // ✅ new column
+    videoUrl: text('videoUrl').notNull(),      // UploadThing file URL
+    uploadKey: varchar('uploadKey'),           // UploadThing file key or UID
+    uploadedAt: varchar('uploadedAt').notNull()
 });
 
-// -------------------- Candidate Profiles --------------------
-export const candidateProfiles = pgTable("candidate_profiles", {
-  id: serial("id").primaryKey(),
-  candidate_id: integer("candidate_id")
-    .notNull()
-    .references(() => users.user_id), // foreign key to users
-  created_at: timestamp("created_at").defaultNow().notNull(),
+export const UserResume = pgTable('userResume', {
+    id: serial('id').primaryKey(),
+    userEmail: varchar('userEmail').notNull(), // links to allowedUsers.email
+    resumeUrl: text('resumeUrl').notNull(),    // uploadthing file URL
+    uploadKey: varchar('uploadKey'),           // uploadthing file key or ID
+    uploadedAt: varchar('uploadedAt').notNull()
 });
-
-// -------------------- Resumes --------------------
-export const resumes = pgTable("resumes", {
-  id: serial("id").primaryKey(),
-  userId: varchar("userId").notNull(), // Clerk's user.id
-  filePath: text("filePath").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-})

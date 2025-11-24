@@ -4,6 +4,6 @@ export default {
     schema: "./utils/schema.js",
     out: "./drizzle",
     dbCredentials:{
-      url:'postgresql://ai-interview-mocker_owner:Le6Z4VipvFwN@ep-icy-waterfall-a1fo4zwn.ap-southeast-1.aws.neon.tech/ai-interview-mocker?sslmode=require'
+      url: process.env.NEXT_PUBLIC_DRIZZLE_DB_URL,
     }
   };
