@@ -55,8 +55,13 @@ function FeedbackPage() {
           </h2>
           <h2 className="text-lg my-2 mx-1 text-gray-200">
             Overall interview rating:{" "}
-            <span className="font-semibold text-white">7/10</span>
-            {/* you can compute actual avg later */}
+            <span className="font-semibold text-white">
+              {(() => {
+                const totalRating = feedbackList.reduce((sum, item) => sum + (Number(item.rating) || 0), 0);
+                const avgRating = (totalRating / feedbackList.length).toFixed(1);
+                return `${avgRating}/10`;
+              })()}
+            </span>
           </h2>
           <h2 className="my-6 mx-1 text-gray-300">
             Find below your questions, answers and feedbacks related to the interview
@@ -88,9 +93,8 @@ function FeedbackPage() {
               <CollapsibleContent>
                 <div className="my-2 bg-gradient-to-br from-gray-800/90 to-gray-700/90 border border-gray-600 rounded-lg flex flex-col gap-3 p-5 text-gray-200">
                   <h2
-                    className={`${
-                      Number(item?.rating) < 5 ? "text-red-400" : "text-blue-400"
-                    } font-semibold`}
+                    className={`${Number(item?.rating) < 5 ? "text-red-400" : "text-blue-400"
+                      } font-semibold`}
                   >
                     <span>Score</span> : {item?.rating}/10
                   </h2>

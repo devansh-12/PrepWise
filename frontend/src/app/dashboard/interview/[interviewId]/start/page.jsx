@@ -7,15 +7,16 @@ import Ques from './_components/Ques';
 import WebcamComponent from './_components/Webcam';
 
 export default function StartInterview({ params }) {
+    const unwrappedParams = React.use(params);
     const [data, setData] = useState();
-    const [interviewQues,setInterviewQues]=useState([]);
-    const [activeIndex,setActiveIndex]=useState(0);
+    const [interviewQues, setInterviewQues] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [timeRemaining, setTimeRemaining] = useState(10 * 60);
     const [isTimerRunning, setIsTimerRunning] = useState(true);
     const [userAnswers, setUserAnswers] = useState([]); // Store all answers
 
     useEffect(() => {
-        console.log("id from params", params.interviewId);
+        console.log("id from params", unwrappedParams.interviewId);
         getInterviewDetails()
     }, [])
 
@@ -33,8 +34,8 @@ export default function StartInterview({ params }) {
     }, [timeRemaining, isTimerRunning]);
 
     const getInterviewDetails = async () => {
-        const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId))
-        const jsonMockResponse=JSON.parse(result[0].jsonMockResp)
+        const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, unwrappedParams.interviewId))
+        const jsonMockResponse = JSON.parse(result[0].jsonMockResp)
         setInterviewQues(jsonMockResponse)
         setData(result[0])
     }
@@ -49,18 +50,18 @@ export default function StartInterview({ params }) {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10 my-10'>
-            <Ques 
-                interviewQues={interviewQues} 
-                activeIndex={activeIndex} 
+            <Ques
+                interviewQues={interviewQues}
+                activeIndex={activeIndex}
                 setActiveIndex={setActiveIndex}
                 timeRemaining={timeRemaining}
                 isTimerRunning={isTimerRunning}
                 setIsTimerRunning={setIsTimerRunning}
             />
-            <WebcamComponent 
-                data={data} 
-                interviewQues={interviewQues} 
-                activeIndex={activeIndex} 
+            <WebcamComponent
+                data={data}
+                interviewQues={interviewQues}
+                activeIndex={activeIndex}
                 setActiveIndex={setActiveIndex}
                 userAnswers={userAnswers}
                 onAnswerUpdate={handleAnswerUpdate}

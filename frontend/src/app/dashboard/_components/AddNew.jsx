@@ -149,73 +149,75 @@ function AddNew() {
             </DialogTitle>
 
             <DialogDescription>
-              <form onSubmit={onSubmit} className="space-y-6">
-                <div>
-                  <label className="text-sm font-medium text-purple-300">
-                    Job Position/Role
-                  </label>
-                  <Input
-                    className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400"
-                    placeholder="Eg. Full Stack Dev"
-                    onChange={(e) => setJobPos(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-purple-300">
-                    Job Description (Tech Stack)
-                  </label>
-                  <Textarea
-                    className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400 min-h-[100px]"
-                    placeholder="Eg. React, Node, MongoDB"
-                    onChange={(e) => setJobDesc(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium text-purple-300">
-                    Years of experience
-                  </label>
-                  <Input
-                    type="number"
-                    className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400"
-                    placeholder="Eg. 3"
-                    max="50"
-                    onChange={(e) => setJobExp(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="flex justify-end gap-4 pt-4">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="text-purple-300 hover:bg-purple-500/10"
-                    onClick={() => setOpenDialog(false)}
-                  >
-                    Cancel
-                  </Button>
-
-                  <Button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg"
-                  >
-                    {loading ? (
-                      <>
-                        <LoaderCircle className="animate-spin mr-2" />
-                        Generating...
-                      </>
-                    ) : (
-                      "Start Interview"
-                    )}
-                  </Button>
-                </div>
-              </form>
+              Add your job position, description, and experience to generate personalized interview questions.
             </DialogDescription>
           </DialogHeader>
+
+          <form onSubmit={onSubmit} className="space-y-6">
+            <div>
+              <label className="text-sm font-medium text-purple-300">
+                Job Position/Role
+              </label>
+              <Input
+                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400"
+                placeholder="Eg. Full Stack Dev"
+                onChange={(e) => setJobPos(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-purple-300">
+                Job Description (Tech Stack)
+              </label>
+              <Textarea
+                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400 min-h-[100px]"
+                placeholder="Eg. React, Node, MongoDB"
+                onChange={(e) => setJobDesc(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-purple-300">
+                Years of experience
+              </label>
+              <Input
+                type="number"
+                className="bg-gray-800/50 border-purple-500/30 focus:border-purple-400"
+                placeholder="Eg. 3"
+                max="50"
+                onChange={(e) => setJobExp(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="flex justify-end gap-4 pt-4">
+              <Button
+                type="button"
+                variant="ghost"
+                className="text-purple-300 hover:bg-purple-500/10"
+                onClick={() => setOpenDialog(false)}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg"
+              >
+                {loading ? (
+                  <>
+                    <LoaderCircle className="animate-spin mr-2" />
+                    Generating...
+                  </>
+                ) : (
+                  "Start Interview"
+                )}
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>

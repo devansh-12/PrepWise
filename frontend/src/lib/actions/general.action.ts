@@ -4,9 +4,9 @@
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
-import { 
-  feedbackSchema, 
-  CreateFeedbackParams, 
+import {
+  feedbackSchema,
+  CreateFeedbackParams,
   GetFeedbackByInterviewIdParams,
   GetLatestInterviewsParams,
   Interview,
@@ -28,7 +28,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       .join("");
 
     const { object } = await generateObject({
-      model: google("gemini-2.0-flash", {
+      model: google("gemini-1.5-flash", {
         structuredOutputs: true,
       }) as any,
       schema: feedbackSchema,

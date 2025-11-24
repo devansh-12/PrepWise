@@ -17,6 +17,7 @@
     "@clerk/clerk-react": "^5.43.0",
     "@clerk/nextjs": "^6.31.3",
     "@codemirror/lang-javascript": "^6.2.4",
+    "@deepgram/sdk": "^4.11.2",
     "@google/generative-ai": "^0.16.0",
     "@neondatabase/serverless": "^0.9.4",
     "@prisma/client": "^6.14.0",

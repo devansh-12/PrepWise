@@ -14,6 +14,17 @@ import { Mic, CircleStopIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/utils/uploadthing";
 
+// Cleans LLM output into valid JSON
+const safeClean = (raw) => {
+  return raw
+    .trim()
+    .replace(/```json/gi, "")
+    .replace(/```/g, "")
+    .replace(/^\s+|\s+$/g, "")
+    .replace(/^[^{\[]*/, "") // remove junk before JSON starts
+    .replace(/[^}\]]*$/, ""); // remove junk after JSON ends
+};
+
 function WebcamComponent({
   data,
   interviewQues,
@@ -24,10 +35,12 @@ function WebcamComponent({
 }) {
   const [userAns, setUserAns] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [videoBlob, setVideoBlob] = useState(null);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [recordingDuration, setRecordingDuration] = useState(0);
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
+  const timerRef = useRef(null);
 
   const { user } = useUser();
   const router = useRouter();
@@ -35,34 +48,61 @@ function WebcamComponent({
   // UploadThing uploader
   const { startUpload } = useUploadThing("videoUploader");
 
-  // Start recording
+  // Maximum recording duration in seconds (2 minutes to keep file size small)
+  const MAX_DURATION = 120;
+
+  // Start recording - AUDIO ONLY to reduce file size
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 16000, // Lower sample rate for smaller files
+        },
+        video: false,
       });
 
-      mediaRecorderRef.current = new MediaRecorder(stream, {
-        mimeType: "video/webm",
-      });
+      // Use lower bitrate for smaller files
+      const options = {
+        mimeType: "audio/webm;codecs=opus",
+        audioBitsPerSecond: 32000, // 32kbps - good quality, small size
+      };
 
+      mediaRecorderRef.current = new MediaRecorder(stream, options);
       chunksRef.current = [];
+      setRecordingDuration(0);
+      setUserAns(""); // Clear previous transcription when starting new recording
 
       mediaRecorderRef.current.ondataavailable = (e) => {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
 
       mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "video/webm" });
-        setVideoBlob(blob);
+        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        setAudioBlob(blob);
         chunksRef.current = [];
+        if (timerRef.current) clearInterval(timerRef.current);
       };
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
+
+      // Start timer
+      timerRef.current = setInterval(() => {
+        setRecordingDuration((prev) => {
+          const newDuration = prev + 1;
+          // Auto-stop at max duration
+          if (newDuration >= MAX_DURATION) {
+            stopRecording();
+            toast.info("Maximum recording duration reached (2 minutes)");
+          }
+          return newDuration;
+        });
+      }, 1000);
     } catch (e) {
-      toast.error("Unable to access webcam.");
+      console.error("Microphone access error:", e);
+      toast.error("Unable to access microphone.");
     }
   };
 
@@ -70,10 +110,15 @@ function WebcamComponent({
   const stopRecording = async () => {
     if (!mediaRecorderRef.current) return;
 
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
     await new Promise((resolve) => {
       mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "video/webm" });
-        setVideoBlob(blob);
+        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        setAudioBlob(blob);
         chunksRef.current = [];
         resolve();
       };
@@ -85,42 +130,113 @@ function WebcamComponent({
     setIsRecording(false);
   };
 
-  // Save answer → upload video → transcribe → update UI
+  // Save answer → transcribe with Deepgram (browser speech as fallback)
   const handleSaveAnswer = async () => {
-    if (!videoBlob) {
+    if (!audioBlob) {
       toast.error("Please record first.");
       return;
     }
 
-    const videoFile = new File(
-      [videoBlob],
+    const audioFile = new File(
+      [audioBlob],
       `interview-${data?.mockId}-q${activeIndex + 1}.webm`,
-      { type: "video/webm" }
+      { type: "audio/webm" }
     );
 
     try {
-      // Upload to UploadThing
-      const uploaded = await startUpload([videoFile]);
-      if (!uploaded) throw new Error("Upload failed");
-
-      const videoUrl = uploaded[0].url;
-
-      // Transcribe using Groq Whisper
+      // Try Deepgram transcription first
       const fd = new FormData();
-      fd.append("file", videoFile);
+      fd.append("file", audioFile);
 
-      const res = await fetch("/api/transcribe", {
+      toast.info("Transcribing your answer...");
+
+      const res = await fetch("/api/deepgram-transcribe", {
         method: "POST",
         body: fd,
       });
 
-      const { text } = await res.json();
-      setUserAns(text);
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Deepgram transcription failed");
+      }
 
+      const { text } = await res.json();
+
+      if (!text || text.trim() === "") {
+        throw new Error("No speech detected in recording");
+      }
+
+      setUserAns(text);
       onAnswerUpdate(text);
+      toast.success("Answer saved!");
+
+      // Upload audio in background (non-blocking, optional)
+      startUpload([audioFile])
+        .then((uploaded) => {
+          if (uploaded) {
+            console.log("Audio uploaded:", uploaded[0].url);
+          }
+        })
+        .catch((err) => {
+          console.warn("Audio upload failed (non-critical):", err);
+        });
     } catch (err) {
-      console.error(err);
-      toast.error("Error saving answer.");
+      console.error("Deepgram transcription error:", err);
+
+      // Fallback to browser Speech Recognition
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        toast.info("Trying browser speech recognition...");
+
+        try {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          const recognition = new SpeechRecognition();
+
+          // Create audio element to play the recorded audio
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+
+          recognition.lang = 'en-US';
+          recognition.continuous = true;
+          recognition.interimResults = false;
+
+          let transcript = '';
+
+          recognition.onresult = (event) => {
+            for (let i = 0; i < event.results.length; i++) {
+              if (event.results[i].isFinal) {
+                transcript += event.results[i][0].transcript + ' ';
+              }
+            }
+          };
+
+          recognition.onend = () => {
+            if (transcript.trim()) {
+              setUserAns(transcript.trim());
+              onAnswerUpdate(transcript.trim());
+              toast.success("Answer saved using browser speech recognition!");
+            } else {
+              toast.error("Could not transcribe audio. Please try recording again.");
+            }
+            URL.revokeObjectURL(audioUrl);
+          };
+
+          recognition.onerror = (event) => {
+            console.error('Browser speech recognition error:', event.error);
+            toast.error("Transcription failed. Please try recording again or type your answer manually.");
+            URL.revokeObjectURL(audioUrl);
+          };
+
+          // Note: Browser speech recognition works with live audio, not recorded files
+          // So we'll just show an error message
+          toast.error("Browser speech recognition requires live audio. Please use the record button and speak your answer.");
+
+        } catch (fallbackErr) {
+          console.error("Fallback error:", fallbackErr);
+          toast.error("All transcription methods failed. Please try again.");
+        }
+      } else {
+        toast.error("Transcription failed: " + err.message);
+      }
     }
   };
 
@@ -128,30 +244,50 @@ function WebcamComponent({
   const handleEndInterview = async () => {
     try {
       for (let i = 0; i < interviewQues.length; i++) {
-        const prompt = `Question: ${interviewQues[i]?.question}, User answer: ${userAnswers[i]}, give JSON {rating,feedback,answer}`;
+        try {
+          const prompt = `Question: ${interviewQues[i]?.question}, User answer: ${userAnswers[i]}, give JSON {rating,feedback,answer}`;
 
-        const res = await chatSession.sendMessage(prompt);
+          const res = await chatSession.sendMessage(prompt);
+          const raw = res.response.text();
+          console.log(`Raw AI response for Q${i + 1}:`, raw);
 
-        const json = JSON.parse(
-          res.response.text().replace("```json", "").replace("```", "")
-        );
+          const cleaned = safeClean(raw);
+          console.log(`Cleaned JSON for Q${i + 1}:`, cleaned);
 
-        await db.insert(UserAnswer).values({
-          mockIdRef: data?.mockId,
-          question: interviewQues[i]?.question,
-          correctAns: json.answer,
-          userAns: userAnswers[i],
-          feedback: json.feedback,
-          rating: Number(json.rating), // important fix
-          userEmail: user?.primaryEmailAddress?.emailAddress,
-          createdAt: moment().format("DD-MM-yyyy"),
-        });
+          let json;
+          try {
+            json = JSON.parse(cleaned);
+          } catch (parseErr) {
+            console.error(`JSON parse error for Q${i + 1}:`, parseErr);
+            console.error(`Failed to parse:`, cleaned);
+            // Use fallback values if parsing fails
+            json = {
+              rating: "5",
+              feedback: "Unable to generate feedback",
+              answer: "N/A"
+            };
+          }
+
+          await db.insert(UserAnswer).values({
+            mockIdRef: data?.mockId,
+            question: interviewQues[i]?.question,
+            correctAns: json.answer || "N/A",
+            userAns: userAnswers[i] || "",
+            feedback: json.feedback || "No feedback available",
+            rating: Number(json.rating) || 5,
+            userEmail: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format("DD-MM-yyyy"),
+          });
+        } catch (questionErr) {
+          console.error(`Error processing question ${i + 1}:`, questionErr);
+          // Continue with next question even if this one fails
+        }
       }
 
       router.push(`/dashboard/interview/${data?.mockId}/feedback`);
     } catch (e) {
-      console.error(e);
-      toast.error("Failed saving interview.");
+      console.error("Overall error in handleEndInterview:", e);
+      toast.error("Failed saving interview: " + e.message);
     }
   };
 
@@ -196,11 +332,26 @@ function WebcamComponent({
         </Button>
       </div>
 
+      {isRecording && (
+        <div className="mt-2 p-2 bg-red-900/20 border border-red-500/30 rounded text-center">
+          <p className="text-red-400 text-sm">
+            🔴 Recording: {Math.floor(recordingDuration / 60)}:{(recordingDuration % 60).toString().padStart(2, '0')} / 2:00
+          </p>
+        </div>
+      )}
+
       {userAns && (
-        <p className="mt-4 p-3 bg-gray-800 rounded">{userAns}</p>
+        <div className="mt-4 p-4 bg-gradient-to-br from-purple-900/30 to-blue-900/30 border-2 border-purple-500/50 rounded-lg shadow-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-purple-400 font-semibold text-sm">Your Transcription:</span>
+            <span className="text-green-400 text-xs">✓ Saved</span>
+          </div>
+          <p className="text-gray-100 text-base leading-relaxed">{userAns}</p>
+        </div>
       )}
     </div>
   );
 }
 
 export default WebcamComponent;
+

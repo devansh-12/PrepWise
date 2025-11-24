@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         jsonMockResp: JSON.stringify(body.jsonMockResp),
         jobPosition: body.jobPosition,
         jobDesc: body.jobDesc,
-        jobExperience: parseInt(body.jobExperience, 10),
+        jobExperience: String(body.jobExperience), // Convert to string to match schema
         createdBy: body.createdBy,
         createdAt: body.createdAt ?? moment().format("DD-MM-YYYY"),
       })
